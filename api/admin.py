@@ -2,11 +2,17 @@ from django.contrib import admin
 from .models import Profile, Category, Skill, Project, BlogPost, Contact, Tag
 
 
+class SkillInline(admin.StackedInline):
+    model = Skill
+    extra = 1
+
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug', 'created_at')
     search_fields = ('name',)
     prepopulated_fields = {'slug': ('name',)}
+    inlines = [SkillInline]
 
 
 @admin.register(Tag)
